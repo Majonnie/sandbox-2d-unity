@@ -9,10 +9,13 @@ public class PlayerMovement : MonoBehaviour
     public float acceleration;
     [Range(0f, 1f)]
     public float groundDecay;
+
     public Rigidbody2D body;
     public BoxCollider2D groundCheck;
     public LayerMask groundMask;
     public bool grounded;
+
+    public Animator playerAnimator;
 
     float xInput;
 
@@ -43,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveWithInput()
     {
+        playerAnimator.SetFloat("xVelocity", Mathf.Abs(xInput));
+
         if (Mathf.Abs(xInput) > 0)
         {
             float increment = xInput * acceleration;
