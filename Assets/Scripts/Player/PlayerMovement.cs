@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     void MoveWithInput()
     {
         playerAnimator.SetFloat("xVelocity", Mathf.Abs(xInput));
+        playerAnimator.SetFloat("yVelocity", body.velocity.y);
 
         if (Mathf.Abs(xInput) > 0)
         {
@@ -65,12 +66,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && grounded)
         {
             body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            playerAnimator.SetBool("grounded", false);
         }
     }
 
     void CheckGround()
     {
         grounded = Physics2D.OverlapAreaAll(groundCheck.bounds.min, groundCheck.bounds.max, groundMask).Length > 0;
+        playerAnimator.SetBool("grounded", grounded);
     }
 
     void ApplyFriction()
